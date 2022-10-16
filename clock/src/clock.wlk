@@ -12,7 +12,7 @@ class BaseTime{
 	}
 	
 	method secondsByHour() {
-		return self.secondsByMinute() * 60
+		return self.secondsByMinute() * self.minutesByHour()
 	}
 		
 	method secondsByMinutes(_minutes){
@@ -310,6 +310,95 @@ class TimerMSDraw inherits Timer{
 		return doubleDigit - (self.firstDigit(doubleDigit) * 10)
 	}
 	
+	
+}
+
+class TimeDHMS inherits TimeHMS{
+	//Time implementation with harder tick/unTick methods
+	var days = 0
+		
+	override method isZeroTime(){
+		return hours == 0 and minutes == 0 and seconds == 0 
+	}
+	
+	method validateDays(_days){
+		if(_days < 0){ self.error("Days must be > than 0!")}
+	}
+	
+ 	method validateTime(_days, _hours, _minutes, _seconds){
+		self.validateDays(_days)
+		self.validateTime(_hours, _minutes, _seconds)
+	}
+	
+	override method setTime(_hours, _minutes, _seconds){
+		days = 0
+		super(_hours, _minutes, _seconds)
+	}
+	
+	method setTime(_days, _hours, _minutes, _seconds){
+		self.validateTime(_days, _hours, _minutes, _seconds)
+		days = _days
+		hours = _hours
+		minutes = _minutes
+		seconds = _seconds
+	}
+	
+	override method toTimeSeconds(){
+		return new TimeSeconds(seconds = self.fullSeconds())	
+	}	
+	
+	override method toTimeHMS(){
+		return new TimeHMS(seconds = seconds, minutes = minutes, hours = hours)	
+	}
+	
+	override method hours(){
+		return hours
+	}
+	
+	override method minutes(){
+		return minutes
+	}
+	
+	override method seconds(){
+		return seconds
+	}
+	
+	override method fullMinutes(){
+		return self.minutesByHours(hours) + minutes
+	}
+	
+	override method fullSeconds(){
+		return (self.fullMinutes() * self.secondsByMinute()) + seconds
+	}
+	
+	override method tick(){
+		if(seconds == 59) {self.tickMinutes()} else { seconds += 1 }
+	}
+	
+	method tickMinutes(){
+		seconds = 0
+		if(minutes == 59) {self.tickHours()} else { minutes += 1 } 
+	}
+	
+	method tickHours(){
+		minutes = 0
+		hours += 1
+	}
+	
+	override method unTick(){
+		self.validateUnTick()
+		if(seconds == 0) {self.unTickMinutes()} else { seconds -= 1 }
+	}
+	
+	method unTickMinutes(){ //only for unTick internal use
+		seconds = 59
+		if(minutes == 0) {self.unTickHours()} else { minutes -= 1 } 
+	}
+	
+	method unTickHours(){ //only for unTick internal use
+		minutes = 59
+		hours -= 1
+	}
 	
 }
 
