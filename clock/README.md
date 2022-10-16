@@ -1,0 +1,1 @@
+Clock class let you create and set a timer, count, countdown using 2 posible Time implementations. Can be increase or decrease by 1 second. Reseted, etc.
