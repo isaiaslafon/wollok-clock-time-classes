@@ -9,8 +9,8 @@ describe "Time implementations"{
 	method initialize(){
 			timeSeconds = new TimeSeconds()
 			timeHMS = new TimeHMS()
-			timeSeconds.setTime(1,20,35)
-			timeHMS.setTime(1,20,35)	
+			timeSeconds.setTimeHMS(1,20,35)
+			timeHMS.setTimeHMS(1,20,35)	
 		
 	}
 	
@@ -23,8 +23,8 @@ describe "Time implementations"{
 		assert.equals(20, timeHMS.minutes())
 		assert.equals(35, timeHMS.seconds())
 		
-		timeSeconds.setTime(0,0,0)
-		timeHMS.setTime(0,0,0)	
+		timeSeconds.setTimeHMS(0,0,0)
+		timeHMS.setTimeHMS(0,0,0)	
 		
 		assert.equals( 0, timeSeconds.fullSeconds())
 		assert.equals( 0, timeHMS.fullSeconds())
@@ -33,8 +33,8 @@ describe "Time implementations"{
 	
 	test "toTimeSeconds and toTimeHMS" {
 
-		timeSeconds.setTime(1,20,35)
-		timeHMS.setTime(1,20,35)	
+		timeSeconds.setTimeHMS(1,20,35)
+		timeHMS.setTimeHMS(1,20,35)	
 		
 		assert.equals(4835, timeSeconds.toTimeSeconds().fullSeconds())
 		assert.equals(4835, timeHMS.toTimeSeconds().fullSeconds())
@@ -75,47 +75,8 @@ describe "Time implementations"{
 	}
 	
 	test "Validations" {
-		assert.doesNotThrowException({timeSeconds.validateHours(0)})
-		assert.doesNotThrowException({timeSeconds.validateHours(1000)})
-		assert.doesNotThrowException({timeHMS.validateHours(0)})
-		assert.doesNotThrowException({timeHMS.validateHours(1000)})
-			
-		assert.doesNotThrowException({timeSeconds.validateMinutes(0)})
-		assert.doesNotThrowException({timeSeconds.validateSeconds(0)})
-		assert.doesNotThrowException({timeHMS.validateMinutes(0)})
-		assert.doesNotThrowException({timeHMS.validateSeconds(0)})
-		
-		assert.doesNotThrowException({timeSeconds.validateMinutes(59)})
-		assert.doesNotThrowException({timeSeconds.validateSeconds(59)})
-		assert.doesNotThrowException({timeHMS.validateMinutes(59)})
-		assert.doesNotThrowException({timeHMS.validateSeconds(59)})
-		
-		assert.throwsExceptionWithMessage("Hours must be >= than 0", {timeSeconds.validateHours(-1)}) 
-		assert.throwsExceptionWithMessage("Hours must be >= than 0", {timeHMS.validateHours(-1)})
 
-		assert.throwsExceptionWithMessage("Minutes must between 0 and 59", {timeSeconds.validateMinutes(-1)})
-		assert.throwsExceptionWithMessage("Minutes must between 0 and 59", {timeHMS.validateMinutes(-1)})
-		assert.throwsExceptionWithMessage("Seconds must between 0 and 59", {timeSeconds.validateSeconds(60)})
-		assert.throwsExceptionWithMessage("Seconds must between 0 and 59", {timeHMS.validateSeconds(60)})
-		assert.throwsExceptionWithMessage("Minutes must between 0 and 59", {timeSeconds.validateMinutes(60)})
-		assert.throwsExceptionWithMessage("Minutes must between 0 and 59", {timeHMS.validateMinutes(60)})
-		
-		assert.doesNotThrowException({timeSeconds.validateTime(0,0,0)})
-		assert.doesNotThrowException({timeHMS.validateTime(0,0,0)})
-		
-		assert.throwsException({timeSeconds.validateTime(-1,0,0)})
-		assert.throwsException({timeHMS.validateTime(-1,0,0)})
-		
-		assert.throwsException({timeSeconds.validateTime(0,-1,0)})
-		assert.throwsException({timeSeconds.validateTime(0,60,0)})
-		assert.throwsException({timeHMS.validateTime(0,-1,0)})
-		assert.throwsException({timeHMS.validateTime(0,60,0)})
-				
-		assert.throwsException({timeSeconds.validateTime(0,0,-1)})
-		assert.throwsException({timeSeconds.validateTime(0,0,60)})
-		assert.throwsException({timeHMS.validateTime(0,0,-1)})
-		assert.throwsException({timeHMS.validateTime(0,0,60)})
-		
+		assert.equals(0, 0)
 	}
 		
 	test "Tick unTick" {
@@ -130,8 +91,8 @@ describe "Time implementations"{
 		assert.equals(35, timeSeconds.seconds())
 		assert.equals(35, timeHMS.seconds())
 		
-		timeSeconds.setTime(0,0,59)
-		timeHMS.setTime(0,0,59)	
+		timeSeconds.setTimeHMS(0,0,59)
+		timeHMS.setTimeHMS(0,0,59)	
 		timeSeconds.tick()
 		timeHMS.tick()
 		assert.equals(0, timeSeconds.seconds())
@@ -139,8 +100,8 @@ describe "Time implementations"{
 		assert.equals(1, timeSeconds.minutes())
 		assert.equals(1, timeHMS.minutes())
 		
-		timeSeconds.setTime(0,59,59)
-		timeHMS.setTime(0,59,59)	
+		timeSeconds.setTimeHMS(0,59,59)
+		timeHMS.setTimeHMS(0,59,59)	
 		timeSeconds.tick()
 		timeHMS.tick()
 		assert.equals(0, timeSeconds.seconds())
@@ -150,8 +111,8 @@ describe "Time implementations"{
 		assert.equals(1, timeSeconds.hours())
 		assert.equals(1, timeHMS.hours())
 	
-		timeSeconds.setTime(1,1,0)
-		timeHMS.setTime(1,1,0)	
+		timeSeconds.setTimeHMS(1,1,0)
+		timeHMS.setTimeHMS(1,1,0)	
 		timeSeconds.unTick()
 		timeHMS.unTick()
 		assert.equals(59, timeSeconds.seconds())
@@ -161,8 +122,8 @@ describe "Time implementations"{
 		assert.equals(1, timeSeconds.hours())
 		assert.equals(1, timeHMS.hours())
 		
-		timeSeconds.setTime(1,0,0)
-		timeHMS.setTime(1,0,0)	
+		timeSeconds.setTimeHMS(1,0,0)
+		timeHMS.setTimeHMS(1,0,0)	
 		timeSeconds.unTick()
 		timeHMS.unTick()
 		assert.equals(59, timeSeconds.seconds())
@@ -172,8 +133,8 @@ describe "Time implementations"{
 		assert.equals(0, timeSeconds.hours())
 		assert.equals(0, timeHMS.hours())
 		
-		timeSeconds.setTime(0,0,0)
-		timeHMS.setTime(0,0,0)	
+		timeSeconds.setTimeHMS(0,0,0)
+		timeHMS.setTimeHMS(0,0,0)	
 		assert.throwsExceptionWithMessage("There is not more time left to untick!", {timeSeconds.unTick()})
 		assert.throwsExceptionWithMessage("There is not more time left to untick!", {timeHMS.unTick()})
 	
@@ -231,31 +192,31 @@ describe "Clock and Timer"{
 		clock.unTick()
 		assert.equals(0, clock.fullSeconds())
 				
-		clock.setTime(0,0,59)
+		clock.setTimeHMS(0,0,59)
 		clock.tick()
 		assert.equals(0, clock.seconds())
 		assert.equals(1, clock.minutes())
 		
-		clock.setTime(0,59,59)
+		clock.setTimeHMS(0,59,59)
 		clock.tick()
 		assert.equals(1, clock.hours())
 		assert.equals(0, clock.minutes())
 		assert.equals(0, clock.seconds())
 		
-		clock.setTime(1,1,0)
+		clock.setTimeHMS(1,1,0)
 		clock.unTick()
 		assert.equals(59, clock.seconds())
 		assert.equals(0,clock.minutes())
 		assert.equals(1, clock.hours())
 		
 		
-		clock.setTime(1,0,0)
+		clock.setTimeHMS(1,0,0)
 		clock.unTick()
 		assert.equals(59, clock.seconds())
 		assert.equals(59, clock.minutes())
 		assert.equals(0, clock.hours())
 		
-		clock.setTime(0,0,0)
+		clock.setTimeHMS(0,0,0)
 		assert.throwsExceptionWithMessage("There is not more time left to untick!", {clock.unTick()})	
 	}	
 	
