@@ -7,156 +7,6 @@ import TimeHMS.*
 import TimeDHMS.*
 import TimeDHMSms.*
 
-describe "Time implementations"{
-
-	var timeSeconds 
-	var timeHMS
-	
-	method initialize(){
-			timeSeconds = new TimeSeconds()
-			timeHMS = new TimeHMS()
-			timeSeconds.setTimeHMS(1,20,35)
-			timeHMS.setTimeHMS(1,20,35)	
-		
-	}
-	
-	test "TimeSeconds and TimeHMS start at 0,0,0, setTime, hours, minutes, seconds" {
-		assert.equals( 1, timeSeconds.hours()  )
-		assert.equals(20, timeSeconds.minutes())
-		assert.equals(35, timeSeconds.seconds())
-		
-		assert.equals( 1, timeHMS.hours()  )
-		assert.equals(20, timeHMS.minutes())
-		assert.equals(35, timeHMS.seconds())
-		
-		timeSeconds.setTimeHMS(0,0,0)
-		timeHMS.setTimeHMS(0,0,0)	
-		
-		assert.equals( 0, timeSeconds.fullSeconds())
-		assert.equals( 0, timeHMS.fullSeconds())
-	
-	}
-	
-	test "toTimeSeconds and toTimeHMS" {
-
-		timeSeconds.setTimeHMS(1,20,35)
-		timeHMS.setTimeHMS(1,20,35)	
-		
-		assert.equals(4835, timeSeconds.toTimeSeconds().fullSeconds())
-		assert.equals(4835, timeHMS.toTimeSeconds().fullSeconds())
-		assert.equals(4835, timeSeconds.toTimeHMS().fullSeconds())
-		assert.equals(4835, timeHMS.toTimeHMS().fullSeconds())
-		
-		assert.equals( 60+20, timeSeconds.fullMinutes())
-		assert.equals( 60+20, timeHMS.fullMinutes())
-	}
-	
-	test "TimeSeconds secondsByMinute/Hour/Minutes/Hours"{
-		
-		assert.equals(60, timeSeconds.secondsByMinute())
-		assert.equals(60, timeHMS.secondsByMinute())
-		
-		assert.equals(60*60, timeHMS.secondsByHour())
-		assert.equals(60*60, timeSeconds.secondsByHour())
-		
-		assert.equals(60, timeSeconds.minutesByHour())
-		assert.equals(60, timeHMS.minutesByHour())
-		
-		assert.equals(60, timeSeconds.secondsByMinutes(1))
-		assert.equals(60, timeHMS.secondsByMinutes(1))
-		assert.equals(60*60, timeHMS.secondsByHours(1))
-		assert.equals(60*60, timeSeconds.secondsByHours(1))
-		
-		assert.equals(60*10, timeSeconds.secondsByMinutes(10))
-		assert.equals(60*10, timeHMS.secondsByMinutes(10))
-		
-		assert.equals(60*60*10, timeSeconds.secondsByHours(10))
-		assert.equals(60*60*10, timeHMS.secondsByHours(10))
-		
-		assert.equals(60, timeSeconds.minutesByHours(1))
-		assert.equals(60, timeSeconds.minutesByHours(1))
-		
-		assert.equals(60*10, timeSeconds.minutesByHours(10))
-		assert.equals(60*10, timeSeconds.minutesByHours(10))
-	}
-	
-	test "Validations" {
-
-		assert.equals(0, 0)
-	}
-		
-	test "Tick unTick" {
-		
-		timeSeconds.tick()
-		timeHMS.tick()
-		assert.equals(36, timeSeconds.seconds())
-		assert.equals(36, timeHMS.seconds())
-		
-		timeSeconds.unTick()
-		timeHMS.unTick()
-		assert.equals(35, timeSeconds.seconds())
-		assert.equals(35, timeHMS.seconds())
-		
-		timeSeconds.setTimeHMS(0,0,59)
-		timeHMS.setTimeHMS(0,0,59)	
-		timeSeconds.tick()
-		timeHMS.tick()
-		assert.equals(0, timeSeconds.seconds())
-		assert.equals(0, timeHMS.seconds())
-		assert.equals(1, timeSeconds.minutes())
-		assert.equals(1, timeHMS.minutes())
-		
-		timeSeconds.setTimeHMS(0,59,59)
-		timeHMS.setTimeHMS(0,59,59)	
-		timeSeconds.tick()
-		timeHMS.tick()
-		assert.equals(0, timeSeconds.seconds())
-		assert.equals(0, timeHMS.seconds())
-		assert.equals(0, timeSeconds.minutes())
-		assert.equals(0, timeHMS.minutes())
-		assert.equals(1, timeSeconds.hours())
-		assert.equals(1, timeHMS.hours())
-	
-		timeSeconds.setTimeHMS(1,1,0)
-		timeHMS.setTimeHMS(1,1,0)	
-		timeSeconds.unTick()
-		timeHMS.unTick()
-		assert.equals(59, timeSeconds.seconds())
-		assert.equals(59, timeHMS.seconds())
-		assert.equals(0, timeSeconds.minutes())
-		assert.equals(0, timeHMS.minutes())
-		assert.equals(1, timeSeconds.hours())
-		assert.equals(1, timeHMS.hours())
-		
-		timeSeconds.setTimeHMS(1,0,0)
-		timeHMS.setTimeHMS(1,0,0)	
-		timeSeconds.unTick()
-		timeHMS.unTick()
-		assert.equals(59, timeSeconds.seconds())
-		assert.equals(59, timeHMS.seconds())
-		assert.equals(59, timeSeconds.minutes())
-		assert.equals(59, timeHMS.minutes())
-		assert.equals(0, timeSeconds.hours())
-		assert.equals(0, timeHMS.hours())
-		
-		timeSeconds.setTimeHMS(0,0,0)
-		timeHMS.setTimeHMS(0,0,0)	
-		assert.throwsExceptionWithMessage("There is not more time left to untick!", {timeSeconds.unTick()})
-		assert.throwsExceptionWithMessage("There is not more time left to untick!", {timeHMS.unTick()})
-	
-	}
-	
-	test "Reach time limit"{
-		assert.that(timeSeconds.reach(new TimeHMS(hours = 1, minutes = 20, seconds = 35)))
-		assert.that(timeHMS.reach(new TimeHMS(hours = 1, minutes = 20, seconds = 35)))
-		timeSeconds.unTick()
-		timeHMS.unTick()		
-		assert.that(timeSeconds.reach(new TimeHMS(hours = 1, minutes = 20, seconds = 34)))
-		assert.that(timeHMS.reach(new TimeHMS(hours = 1, minutes = 20, seconds = 34)))
-	
-	}
-}
-
 describe "Clock and Timer"{
 	var clock 
 	var timer
@@ -212,15 +62,15 @@ describe "Clock and Timer"{
 		clock.setTime(new TimeHMS(hours = 1, minutes = 1, seconds = 0))
 		clock.unTick()
 		assert.equals(59, clock.seconds())
-		assert.equals(0,clock.minutes())
-		assert.equals(1, clock.hours())
+		assert.equals(00, clock.minutes())
+		assert.equals(01, clock.hours())
 		
 		
 		clock.setTime(new TimeHMS(hours = 1, minutes = 0, seconds = 0))
 		clock.unTick()
 		assert.equals(59, clock.seconds())
 		assert.equals(59, clock.minutes())
-		assert.equals(0, clock.hours())
+		assert.equals(00, clock.hours())
 		
 		clock.setTime(new TimeHMS(hours = 0, minutes = 0, seconds = 0))
 		assert.throwsExceptionWithMessage("There is not more time left to untick!", {clock.unTick()})	
