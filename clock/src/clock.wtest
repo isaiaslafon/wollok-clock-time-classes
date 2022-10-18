@@ -175,13 +175,13 @@ describe "Clock and Timer"{
 	test "Reach Time Limit with all values in 0 and not with limit in 1 second" {
 		assert.that(clock.reachTimeLimit())
 				
-		clock.setLimit(0,0,1) //Testing clock is enough
+		clock.setLimit(new TimeSeconds(seconds = 1)) //Testing clock is enough
 		assert.notThat(clock.reachTimeLimit())
 			
 	}
 	
 	test "Start and Reset" {
-		clock.setStart(1,1,1) //Testing clock is enough
+		clock.setStart(new TimeHMS(hours = 1, minutes = 1, seconds = 1)) //Testing clock is enough
 		assert.equals(0, clock.fullSeconds())
 		
 		clock.reset()
@@ -198,31 +198,31 @@ describe "Clock and Timer"{
 		clock.unTick()
 		assert.equals(0, clock.fullSeconds())
 				
-		clock.setTimeHMS(0,0,59)
+		clock.setTime(new TimeHMS(hours = 0, minutes = 0, seconds = 59))
 		clock.tick()
 		assert.equals(0, clock.seconds())
 		assert.equals(1, clock.minutes())
 		
-		clock.setTimeHMS(0,59,59)
+		clock.setTime(new TimeHMS(hours = 0, minutes = 59, seconds = 59))
 		clock.tick()
 		assert.equals(1, clock.hours())
 		assert.equals(0, clock.minutes())
 		assert.equals(0, clock.seconds())
 		
-		clock.setTimeHMS(1,1,0)
+		clock.setTime(new TimeHMS(hours = 1, minutes = 1, seconds = 0))
 		clock.unTick()
 		assert.equals(59, clock.seconds())
 		assert.equals(0,clock.minutes())
 		assert.equals(1, clock.hours())
 		
 		
-		clock.setTimeHMS(1,0,0)
+		clock.setTime(new TimeHMS(hours = 1, minutes = 0, seconds = 0))
 		clock.unTick()
 		assert.equals(59, clock.seconds())
 		assert.equals(59, clock.minutes())
 		assert.equals(0, clock.hours())
 		
-		clock.setTimeHMS(0,0,0)
+		clock.setTime(new TimeHMS(hours = 0, minutes = 0, seconds = 0))
 		assert.throwsExceptionWithMessage("There is not more time left to untick!", {clock.unTick()})	
 	}	
 	
