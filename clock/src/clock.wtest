@@ -1,5 +1,11 @@
 import clock.*
 import wollok.game.*
+import BaseTime.*
+import TimeSeconds.*
+import TimeMS.*
+import TimeHMS.*
+import TimeDHMS.*
+import TimeDHMSms.*
 
 describe "Time implementations"{
 
