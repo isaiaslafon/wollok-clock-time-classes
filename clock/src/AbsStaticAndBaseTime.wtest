@@ -1,0 +1,35 @@
+import TimeSeconds.*
+//Testing abstract Base time Through TimeSeconds
+describe "BaseTime and StaticTime queries through TimeSeconds"{
+	const staticTime = new TimeSeconds()
+	
+	test "hours by day, minutes by hour, seconds by minutes queries" {
+		assert.equals(60, staticTime.secondsByMinute()) 
+		assert.equals(60, staticTime.minutesByHour()  )
+		assert.equals(24, staticTime.hoursByDay()     )
+	}
+	
+	test "Conversion queries"{
+		assert.equals(   60*60, staticTime.secondsByHour())
+		assert.equals(24*60*60, staticTime.secondsByDay() )
+		assert.equals(   24*60, staticTime.minutesByDay() )
+	
+		assert.equals(      60*2, staticTime.secondsByMinutes(2))
+		assert.equals(   60*60*2, staticTime.secondsByHours(2)  )
+		assert.equals(24*60*60*2, staticTime.secondsByDays(2)   )
+		
+		assert.equals(   2*60, staticTime.minutesByHours(2))
+		assert.equals(2*24*60, staticTime.minutesByDays(2) )
+		assert.equals(      2, staticTime.minutesBySeconds(120))
+		
+		assert.equals(48, staticTime.hoursByDays(2)     )
+		assert.equals( 2, staticTime.hoursByMinutes(120))
+		assert.equals( 2, staticTime.hoursBySeconds(7200))
+		
+		assert.equals(2, staticTime.daysBySeconds(172800))
+		assert.equals(1, staticTime.daysByMinutes(1440)  )
+		assert.equals(2, staticTime.daysByHours(48)      )
+		
+		assert.equals(0, staticTime.frame())
+	}	
+}

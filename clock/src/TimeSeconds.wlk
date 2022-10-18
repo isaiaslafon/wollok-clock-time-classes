@@ -1,4 +1,5 @@
-import BaseTime.*
+import AbsBaseTime.*
+
 import TimeMS.*
 import TimeHMS.*
 import TimeDHMS.*

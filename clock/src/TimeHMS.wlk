@@ -1,6 +1,7 @@
-import BaseTime.*
+import AbsBaseTime.*
 import TimeSeconds.*
 import TimeMS.*
+
 import TimeDHMS.*
 
 class TimeHMS inherits TimeMS{

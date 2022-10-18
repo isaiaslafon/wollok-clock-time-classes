@@ -1,5 +1,6 @@
-import BaseTime.*
+import AbsBaseTime.*
 import TimeSeconds.*
+
 import TimeHMS.*
 import TimeDHMS.*
 
