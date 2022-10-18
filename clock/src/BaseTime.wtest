@@ -1,0 +1,35 @@
+import TimeSeconds.*
+//Testing abstract Base time Through TimeSeconds
+describe "BaseTime queries through TimeSeconds"{
+	const baseTime = new TimeSeconds()
+	
+	test "hours by day, minutes by hour, seconds by minutes queries" {
+		assert.equals(60, baseTime.secondsByMinute()) 
+		assert.equals(60, baseTime.minutesByHour()  )
+		assert.equals(24, baseTime.hoursByDay()     )
+	}
+	
+	test "Conversion queries"{
+		assert.equals(   60*60, baseTime.secondsByHour())
+		assert.equals(24*60*60, baseTime.secondsByDay() )
+		assert.equals(   24*60, baseTime.minutesByDay() )
+	
+		assert.equals(      60*2, baseTime.secondsByMinutes(2))
+		assert.equals(   60*60*2, baseTime.secondsByHours(2)  )
+		assert.equals(24*60*60*2, baseTime.secondsByDays(2)   )
+		
+		assert.equals(   2*60, baseTime.minutesByHours(2))
+		assert.equals(2*24*60, baseTime.minutesByDays(2) )
+		assert.equals(      2, baseTime.minutesBySeconds(120))
+		
+		assert.equals(48, baseTime.hoursByDays(2)     )
+		assert.equals( 2, baseTime.hoursByMinutes(120))
+		assert.equals( 2,baseTime.hoursBySeconds(7200))
+		
+		assert.equals(2, baseTime.daysBySeconds(172800))
+		assert.equals(1, baseTime.daysByMinutes(1440)  )
+		assert.equals(2, baseTime.daysByHours(48)      )
+		
+		assert.equals(0, baseTime.frame())
+	}	
+}
