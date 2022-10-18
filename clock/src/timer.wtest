@@ -1,0 +1,28 @@
+import clock.*
+import wollok.game.*
+import BaseTime.*
+import TimeSeconds.*
+import TimeMS.*
+import TimeHMS.*
+import TimeDHMS.*
+import TimeDHMSms.*
+
+describe "Timer"{
+	var timer
+	var time 
+	var startTime
+	var timeLimit
+	
+	method initialize(){
+			time = new TimeSeconds(seconds = 0) //0H 0M 0S
+			startTime = time
+	        timeLimit = time
+	        timer = new Timer(time = time, startTime = startTime, timeLimit = timeLimit, timerName = "timer")
+	}
+
+	test "Timer next, resume, pause"{
+		timer.next()
+		assert.equals(1, timer.seconds())
+		//Resume and pause are onTick adding and removing events		
+	}
+}
