@@ -56,13 +56,13 @@ describe "TimeSeconds"{
 		assert.equals(0, 0)
 	}
 		
-	test "Tick unTick" {
+	test "Tick and unTick" {
 		
 		timeSeconds.tick()
-		assert.equals(36, timeSeconds.seconds())
+		assert.equals(00, timeSeconds.seconds())
 				
 		timeSeconds.unTick()
-		assert.equals(35, timeSeconds.seconds())
+		assert.equals(59, timeSeconds.seconds())
 				
 		timeSeconds.setTimeHMS(0,0,59)
 		timeSeconds.tick()
@@ -92,8 +92,8 @@ describe "TimeSeconds"{
 	}
 	
 	test "Reach time limit"{
-		assert.that(timeSeconds.reach(new TimeHMS(hours = 1, minutes = 20, seconds = 35)))
+		assert.that(timeSeconds.reach(new TimeDHMS(days = 1, hours = 23, minutes = 59, seconds = 59)))
 		timeSeconds.unTick()
-		assert.that(timeSeconds.reach(new TimeHMS(hours = 1, minutes = 20, seconds = 34)))	
+		assert.notThat(timeSeconds.reach(new TimeDHMS(days = 1, hours = 23, minutes = 59, seconds = 59)))	
 	}
 }

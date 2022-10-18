@@ -1,6 +1,5 @@
-import clock.*
+import timer.*
 import wollok.game.*
-import BaseTime.*
 import TimeSeconds.*
 import TimeMS.*
 import TimeHMS.*

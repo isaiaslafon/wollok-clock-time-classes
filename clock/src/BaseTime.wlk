@@ -1,4 +1,4 @@
-class BaseTime{
+class StaticTime{
 	//Used to calculate minutes and hours
 	method secondsByMinute() {
 		return 60
@@ -74,17 +74,13 @@ class BaseTime{
 	}
 	
 	method isZeroTime()
-
-    method setTime(_time)
+	
+	method setTime(_time)
     method setTimeSeconds(_seconds)
     method setTimeMS(_minutes,_seconds)
     method setTimeHMS(_hours,_minutes,_seconds)
     method setTimeDHMS(_days, _hours,_minutes,_seconds)	
 
-	method validateUnTick(){
-		if(self.isZeroTime()){ self.error("There is not more time left to untick!") }
-	}
-	
 	//Use to create a new time of the available implementations.
 	method toTimeSeconds()
 	method toTimeMS()
@@ -104,6 +100,12 @@ class BaseTime{
 	method fullHours()
 	method fullMinutes()
 	method fullSeconds() //Necessary for reach() method implementation
+}
+
+class BaseTime inherits StaticTime{
+	method validateUnTick(){
+		if(self.isZeroTime()){ self.error("There is not more time left to untick!") }
+	}
 	
 	//Actions Order to advance and rewind time by the second.
 	method tick()
@@ -111,6 +113,11 @@ class BaseTime{
 	
 	//actual time is equal to time limit. 
 	method reach(timeLimit){
-		return self.fullSeconds() == timeLimit.fullSeconds() and self.frame() == 0
+		//return self.fullSeconds() == timeLimit.fullSeconds() and self.frame() == 0
+		return  self.frame()   == timeLimit.frame() 
+			and self.seconds() == timeLimit.seconds()
+			and self.minutes() == timeLimit.minutes()
+			and self.hours()   == timeLimit.hours()
+			and self.days()    == timeLimit.days()
 	}	
 }
