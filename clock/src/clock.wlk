@@ -15,16 +15,16 @@ class Clock {
 	}
 	
 	
-	method setTimeHMS(hours, minutes, seconds) {
-		time.setTimeHMS(hours, minutes, seconds)
+	method setTime(_time) {
+		time = _time
 	}
 	
-	method setLimit(hours, minutes, seconds) {
-		timeLimit = new TimeHMS(hours = hours, minutes = minutes, seconds = seconds)
+	method setLimit(_time) {
+		timeLimit = _time
 	}
 	
-	method setStart(hours, minutes, seconds) {
-		startTime = new TimeHMS(hours = hours, minutes = minutes, seconds = seconds)
+	method setStart(_time) {
+		startTime = _time
 	}
 	
 	method reset() {
